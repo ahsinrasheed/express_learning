@@ -1,0 +1,36 @@
+const fs = require('fs');
+
+
+
+// Route Handlers----
+exports.getAllUsers = (req, res) => {
+    return res.status(500).json({
+        status: 'error',
+        message: "This router is not yet defined. "
+    });
+};
+exports.getUser = (req, res) => {
+    return res.status(500).json({
+        status: 'error',
+        message: "This router is not yet defined. "
+    });
+};
+exports.createUser = (req, res) => {
+    return res.status(500).json({
+        status: 'error',
+        message: "This router is not yet defined. "
+    });
+};
+exports.updateUser = (req, res) => {
+    return res.status(500).json({
+        status: 'error',
+        message: "This router is not yet defined. "
+    });
+};
+exports.deleteUser = (req, res) => {
+    return res.status(500).json({
+        status: 'error',
+        message: "This router is not yet defined. "
+    });
+};
+
