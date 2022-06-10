@@ -9,9 +9,32 @@ const Tour = require('./../models/tourModel');
 // ROuter Handler
 exports.getAllTours = async (req, res) => {
     try {
+        console.log(req.query);
+
+        // BUILD QUERY
+        // 1) Filtering
+        const queryObj = { ...req.query };
+        const excludeFields = ['page', 'sort', 'limit', 'fields'];
+        excludeFields.forEach(el => delete queryObj[el]);
+
+        // 2) Advance Filtering...
+
+        let queryStr = JSON.stringify(queryObj);
+        queryStr =  queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`);
+        console.log(JSON.parse(queryStr));
         
-        const tours = await Tour.find();
+        const query = Tour.find(JSON.parse(queryStr));
         
+        // EXECUTE QUERY
+        const tours = await query;
+
+         // const query =  Tour.find()
+        //     .where('duration')
+        //     .equals(5)
+        //     .where('difficulty')
+        //     .equals('easy');
+
+        // SEND RESPONSE 
         res.status(200).json({
             status: 'success',
             results: tours.length,
@@ -62,7 +85,7 @@ exports.createTour = async (req, res) => {
     } catch (err) {
         res.status(400).json({
             status: 'fail',
-            message: 'Invalid Data Sent!'
+            message: err,
         });
     }
 };
