@@ -7,13 +7,16 @@ dotenv.config({ path: './config.env' });
 const app = require('./app');
 
 // console.log(process.env);
-// const DB = process.env.DATABASE.replace( '<PASSWORD>', process.env.DATABASE_PASSWORD);
+const DB = process.env.DATABASE.replace(
+  '<PASSWORD>',
+  process.env.DATABASE_PASSWORD
+);
 
-const DBCon = process.env.DATABASE_LOCAL;
+// const DBCon = process.env.DATABASE_LOCAL;
 
 mongoose
-  // .connect(DB, {
-  .connect(DBCon, {
+  .connect(DB, {
+    // .connect(DBCon, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false,
