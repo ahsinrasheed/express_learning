@@ -2,8 +2,13 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
-dotenv.config({ path: './config.env' });
+process.on('uncaughtException', (err) => {
+  console.log('UNCAUGHT EXCEPTION! : Shuting Down...');
+  console.log(err.name, err.message);
+  process.exit(1);
+});
 
+dotenv.config({ path: './config.env' });
 const app = require('./app');
 
 // console.log(process.env);
@@ -15,8 +20,8 @@ const DB = process.env.DATABASE.replace(
 // const DBCon = process.env.DATABASE_LOCAL;
 
 mongoose
+  // .connect(DBCon, {
   .connect(DB, {
-    // .connect(DBCon, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false,
@@ -26,8 +31,16 @@ mongoose
 
 const port = process.env.PORT || 3000;
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`App running on the port ${port}...`);
+});
+
+process.on('unhandledRejection', (err) => {
+  console.log('UNHANDLED REJECTION! : Shuting Down...');
+  console.log(err.name, err.message);
+  server.close(() => {
+    process.exit(1);
+  });
 });
 
 // npm i eslint prettier eslint-config-prettier eslint-plugin-prettier eslint-config-airbnb eslint-plugin-node eslint-plugin-import eslint-plugin-jsx-a11y eslint-plugin-react  --save-dev
