@@ -11,15 +11,15 @@ const sendEmail = async (options) => {
     },
   });
   // 2) Define the email options
-  const emailOptions = {
-    from: 'Ahsin Rasheed <ahsinbhatti@gmail.com',
+  const mailOptions = {
+    from: 'Ahsin Rasheed <test@gmail.io>',
     to: options.email,
     subject: options.subject,
     text: options.message,
     // html: options.message,
   };
   // 3) Send the email with nodemailer
-  await transporter.sendMail(emailOptions);
+  await transporter.sendMail(mailOptions);
 };
 
 module.exports = sendEmail;
