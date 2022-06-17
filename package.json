@@ -14,12 +14,13 @@
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
+    "express-rate-limit": "^6.4.0",
+    "helmet": "^5.1.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.13.14",
     "morgan": "^1.10.0",
     "nodemailer": "^6.7.5",
     "slugify": "^1.6.5",
-    "smtp": "^0.1.4",
     "validator": "^13.7.0"
   },
   "devDependencies": {
