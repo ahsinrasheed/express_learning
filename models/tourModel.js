@@ -1,7 +1,8 @@
 /* eslint-disable prettier/prettier */
 const mongoose = require('mongoose');
 const slugify = require('slugify');
-const validator = require('validator');
+// const validator = require('validator');
+
 // const User = require('./userModel');
 
 const tourSchema = new mongoose.Schema({
@@ -121,6 +122,14 @@ toObject: { virtuals: true },
 tourSchema.virtual('durationWeeks').get(function () {
     return this.duration / 7;
 });
+
+// Virtual Populate
+tourSchema.virtual('reviews', {
+    ref: 'Review',
+    foreignField: 'tour',
+    localField: '_id',
+});
+
 // DOCUMENT MIDDLEWARE : run before .save() and .create();
 
 tourSchema.pre('save', function (next) {
