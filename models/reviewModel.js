@@ -1,8 +1,9 @@
-// Review / rating / createdAt / ref to tour / ref to user 
+// Review / rating / createdAt / ref to tour / ref to user
 const mongoose = require('mongoose');
 const Tour = require('./tourModel');
 
-const reviewSchema = new mongoose.Schema({
+const reviewSchema = new mongoose.Schema(
+  {
     review: {
       type: String,
       require: [true, 'Review can not be empty'],
@@ -35,7 +36,7 @@ const reviewSchema = new mongoose.Schema({
 
 // QUERY Model
 
-reviewSchema.index({ tour: 1, user: 1 }, { uniquer: true });
+reviewSchema.index({ tour: 1, user: 1 }, { unique: true });
 
 reviewSchema.pre(/^find/, function (next) {
   // this.populate({
