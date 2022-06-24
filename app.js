@@ -72,6 +72,14 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use((req, res, next) => {
+  res.setHeader(
+    'Content-Security-Policy',
+    "script-src 'self' cdnjs.cloudflare.com"
+  );
+  return next();
+});
+
 // Mount the Routes...
 
 app.use('/', viewRouter);
