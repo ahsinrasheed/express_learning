@@ -26,7 +26,23 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Set Security HTTP Headers
-app.use(helmet());
+app.use(
+  helmet(
+    {
+    crossOriginEmbedderPolicy: false,
+    crossOriginResourcePolicy: {
+        allowOrigins: ['*']
+    },
+    contentSecurityPolicy: {
+        directives: {
+            defaultSrc: ['*'],
+            scriptSrc: ["* data: 'unsafe-eval' 'unsafe-inline' blob:"],
+            "img-src": ["* data: 'unsafe-eval' 'unsafe-inline' blob:"]
+        }
+    }
+  }
+  )
+);
 
 // Development logging
 if (process.env.NODE_ENV === 'development') {
@@ -72,13 +88,15 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use((req, res, next) => {
-  res.setHeader(
-    'Content-Security-Policy',
-    "script-src 'self' cdnjs.cloudflare.com"
-  );
-  return next();
-});
+// app.use((req, res, next) => {
+//   res.setHeader(
+//     'Content-Security-Policy',
+//     // "script-src 'self' cdnjs.cloudflare.com",
+//     "script-src 'self' *",
+//   );
+//   return next();
+// });
+
 
 // Mount the Routes...
 
