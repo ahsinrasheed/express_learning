@@ -81,6 +81,7 @@ exports.logout = (req, res) => {
 // MiddleWare function for the router protection
 
 exports.protect = catchAsync(async (req, res, next) => {
+  
   // 1) Getting token and check of it's there.
   let token;
   if (
@@ -122,6 +123,7 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   // GRANT ACCESS  TO PROTECTED ROUTE
   req.user = currentUser;
+  res.locals.user = currentUser;
   next();
 });
 
