@@ -13,8 +13,14 @@ module.exports = class Email {
   // 1) create a Transporter
   newTransport() {
     if (process.env.NODE_ENV === 'production') {
-      // Sendrid
-      return 1;
+      // SendGrid
+      return nodemailer.createTransport({
+        service: 'SendGrid',
+        auth: {
+          user: process.env.SENDGRID_USERNAME,
+          pass: process.env.SENDGRID_PASSWORD,
+        }
+      });
     }
     
     return nodemailer.createTransport({
@@ -40,8 +46,8 @@ module.exports = class Email {
 
     // 2) Define the email Options
     const mailOptions = {
-      from: this.from,
       to: this.to,
+      from: this.from,
       subject,
       html,
       text: htmlToText.fromString(html),
